@@ -387,15 +387,15 @@ cdef class BVHModel(CollisionGeometry):
 
     def beginModel(self, num_tris_=0, num_vertices_=0):
         n = (<defs.BVHModel*> self.thisptr).beginModel(<int?> num_tris_, <int?> num_vertices_)
-        return n
+        return self._check_ret_value(n)
 
     def endModel(self):
         n = (<defs.BVHModel*> self.thisptr).endModel()
-        return n
+        return self._check_ret_value(n)
 
     def addVertex(self, x, y, z):
-        cdef np.ndarray[double, ndim=1] n = numpy.array([x, y, z])
-        n = (<defs.BVHModel*> self.thisptr).addVertex(defs.Vector3d(&n[0]))
+        cdef np.ndarray[double, ndim=1] vertex = numpy.array([x, y, z])
+        n = (<defs.BVHModel*> self.thisptr).addVertex(defs.Vector3d(&vertex[0]))
         return self._check_ret_value(n)
 
     def addTriangle(self, v1, v2, v3):
